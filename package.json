@@ -1,0 +1,1 @@
+{"name":"incidentlens","version":"1.0.0","private":true,"type":"module","description":"Evidence-first investigations for simulated service incidents","engines":{"node":">=22"},"scripts":{"start":"node --env-file-if-exists=.env server.mjs","test":"node --test","eval":"node scripts/evaluate.mjs","eval:live":"node --env-file-if-exists=.env scripts/evaluate.mjs --live"}}

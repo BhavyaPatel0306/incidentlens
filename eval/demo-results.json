@@ -1,0 +1,123 @@
+{
+  "mode": "demo",
+  "measuredAt": "2026-09-24T18:11:33.778Z",
+  "liveAIValidated": false,
+  "note": "Deterministic fixture regression only; not a measurement of LLM quality.",
+  "passed": 4,
+  "total": 4,
+  "results": [
+    {
+      "case": "INC-101",
+      "pass": true,
+      "grounded": true,
+      "status": true,
+      "cause": true,
+      "evidence": true,
+      "toolCalls": 3,
+      "durationMs": 2,
+      "report": {
+        "status": "likely_cause",
+        "title": "Release expects an unapplied database migration",
+        "summary": "The new checkout query references discount_code, but the database reports that column missing. The release record says the migration job was skipped.",
+        "confidence": "high",
+        "evidenceIds": [
+          "L102",
+          "L103",
+          "D101",
+          "R101"
+        ],
+        "nextSteps": [
+          "Compare migration 048 with the current database schema.",
+          "Ask the service owner to review a compatible rollback or a tested migration plan."
+        ],
+        "limitations": [
+          "Synthetic records support this explanation; database state has not been independently verified."
+        ]
+      }
+    },
+    {
+      "case": "INC-102",
+      "pass": true,
+      "grounded": true,
+      "status": true,
+      "cause": true,
+      "evidence": true,
+      "toolCalls": 3,
+      "durationMs": 0,
+      "report": {
+        "status": "likely_cause",
+        "title": "Export handler leaks database connections",
+        "summary": "Idle export transactions remain open while the pool is at its 100-connection limit. The new transaction handler is temporally associated with the exhaustion.",
+        "confidence": "high",
+        "evidenceIds": [
+          "L201",
+          "L202",
+          "L203",
+          "D201",
+          "R102"
+        ],
+        "nextSteps": [
+          "Inspect exception paths in the export handler for transaction cleanup.",
+          "Reproduce the leak under load and have an operator review the fix."
+        ],
+        "limitations": [
+          "A code review is still needed to confirm the defective release path."
+        ]
+      }
+    },
+    {
+      "case": "INC-103",
+      "pass": true,
+      "grounded": true,
+      "status": true,
+      "cause": true,
+      "evidence": true,
+      "toolCalls": 3,
+      "durationMs": 0,
+      "report": {
+        "status": "likely_cause",
+        "title": "Payment dependency is timing out",
+        "summary": "Authorization and dependency probes time out while local database and inventory probes remain healthy. This points to the payment dependency path.",
+        "confidence": "medium",
+        "evidenceIds": [
+          "L301",
+          "L302",
+          "L303",
+          "D301",
+          "R103"
+        ],
+        "nextSteps": [
+          "Check the payment provider status and network reachability.",
+          "Review retry limits and circuit breaker behavior with the service owner."
+        ],
+        "limitations": [
+          "The fixtures cannot distinguish a provider outage from a shared network-path failure."
+        ]
+      }
+    },
+    {
+      "case": "INC-101-missing-telemetry",
+      "pass": true,
+      "grounded": true,
+      "status": true,
+      "cause": true,
+      "evidence": true,
+      "toolCalls": 3,
+      "durationMs": 0,
+      "report": {
+        "status": "insufficient_evidence",
+        "title": "More telemetry is needed",
+        "summary": "The available records do not establish a likely cause. Runbooks describe possibilities but are not evidence that a failure occurred.",
+        "confidence": "low",
+        "evidenceIds": [],
+        "nextSteps": [
+          "Restore logs for the incident window.",
+          "Collect deployment history and dependency health checks before attributing a cause."
+        ],
+        "limitations": [
+          "Missing telemetry prevents a supported diagnosis."
+        ]
+      }
+    }
+  ]
+}
