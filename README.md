@@ -6,6 +6,8 @@ An evidence-first incident investigation workspace for one simulated checkout se
 
 ![IncidentLens investigation workspace](docs/demo.png)
 
+[![CI](https://github.com/BhavyaPatel0306/incidentlens/actions/workflows/ci.yml/badge.svg)](https://github.com/BhavyaPatel0306/incidentlens/actions/workflows/ci.yml)
+
 ## Run locally
 
 Requires Node.js 22.9+ (tested with 24.14.0). No third-party runtime packages or installation step are required.
@@ -82,17 +84,6 @@ This is a 1–2 day portfolio scope: one service, three static incidents, no ing
 
 Citation validation proves a cited record was retrieved, not that it logically entails the model's claim. Live output may still be mistaken. Confidence labels are qualitative. The local server is not designed for public hosting or multiple users. A disconnected browser does not cancel a provider request already in progress; the request timeout and turn budget still bound it. Demo calls complete immediately, so the browser may display all three activity events together rather than progressively.
 
-## GitHub presentation
+## Project status
 
-This is a separate Git repository, independent of TeamForge. CI runs tests and the fixture evaluation without secrets. Suggested repository name: `incidentlens`. Suggested description: **Read-only AI incident investigations with visible tool calls, cited evidence, and an honest offline demo.**
-
-GitHub connector identity was available as `BhavyaPatel0306`, but that connector exposes no repository-creation operation. The installed GitHub CLI could not read its configuration at `C:\Users\bhavy\AppData\Roaming\GitHub CLI\config.yml` because access was denied. No remote repository has been created or pushed.
-
-To publish from a terminal with working GitHub authentication, run:
-
-```sh
-gh auth status
-gh repo create incidentlens --public --source=. --remote=origin --push
-```
-
-Use `--private` instead if you prefer private visibility. If authentication is absent, run `gh auth login` first. Alternatively, create an empty GitHub repository, add its URL as `origin`, and push `main`.
+Published as a portfolio demonstrator. [GitHub Actions](https://github.com/BhavyaPatel0306/incidentlens/actions) runs automated tests and the deterministic fixture evaluation without API credentials. The recorded results above distinguish demo regression checks from live-model evaluation.
